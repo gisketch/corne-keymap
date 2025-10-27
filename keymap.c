@@ -168,19 +168,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     // // Layer 1: Numbers & Symbols (Colemak)
-    // [1] = LAYOUT_split_3x6_3(
-    //    KC_TAB, KC_EXLM,   KC_AT, KC_LPRN, KC_RPRN, KC_BSLS,                      KC_QUOT,    KC_7,    KC_8,    KC_9, KC_ASTR,  KC_GRV,
-    //   MT(MOD_LSFT, KC_ESC), KC_HASH,  KC_DLR, KC_LCBR, KC_RCBR,  KC_GRV,                      KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL, KC_MINS,
-    //   KC_LCTL, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                      KC_AMPR,    KC_1,    KC_2,    KC_3, KC_SLSH, KC_QUOT,
-    //                                       KC_LALT, _______,  KC_SPC,    KC_BSPC,   MO(3),    KC_0
-    // ),
-    //
     [1] = LAYOUT_split_3x6_3(
-       KC_TAB, KC_EXLM,   KC_AT, KC_LPRN, KC_RPRN, KC_PIPE,                      KC_COLN,    KC_7,    KC_8,    KC_9, KC_PLUS,  KC_GRV,
-      LSFT_T(KC_ESC), KC_HASH,  KC_DLR, KC_LCBR, KC_RCBR, ARROW_R,                      KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL, KC_UNDS,
-      KC_LCTL, KC_PERC, KC_AMPR, KC_LBRC, KC_RBRC, ARROW_L,                      KC_QUOT,    KC_1,    KC_2,    KC_3, KC_MINS, KC_BSLS,
-                                          KC_LALT, _______,  KC_SPC,    KC_BSPC,   MO(3),    KC_0
-),
+      KC_TAB, KC_EXLM,   KC_AT, KC_LPRN, KC_RPRN, KC_PIPE,                      KC_COLN, KC_MINS, KC_PLUS, KC_ASTR, KC_SLSH,  KC_DEL,
+      LSFT_T(KC_ESC), KC_HASH,  KC_DLR, KC_LCBR, KC_RCBR, ARROW_R,              KC_SCLN, KC_QUOT, KC_DQUO, KC_UNDS,  KC_GRV, KC_ENT,
+      KC_LCTL, KC_PERC, KC_AMPR, KC_LBRC, KC_RBRC, ARROW_L,                     KC_TILD, KC_EQL,  KC_LABK, KC_RABK,  KC_QUES, KC_BSLS,
+                                          KC_LALT, _______,  KC_SPC,    KC_BSPC,   MO(3), KC_LSFT
+    ),
 
     // Layer 2: Functions & Navigation (Colemak)
     [2] = LAYOUT_split_3x6_3(
@@ -294,7 +287,7 @@ uint16_t get_layer1_keycode(uint8_t row, uint8_t col) {
 }
 
 typedef enum {
-    L1_CAT_NUMBER,
+    // L1_CAT_NUMBER,
     L1_CAT_BRACKET,
     L1_CAT_SYMBOL,
     L1_CAT_MOD
@@ -302,12 +295,12 @@ typedef enum {
 
 layer1_category_t get_layer1_category(uint16_t keycode) {
     // Check numbers
-    if (keycode == KC_0 || keycode == KC_1 || keycode == KC_2 ||
-        keycode == KC_3 || keycode == KC_4 || keycode == KC_5 ||
-        keycode == KC_6 || keycode == KC_7 || keycode == KC_8 ||
-        keycode == KC_9) {
-        return L1_CAT_NUMBER;
-    }
+    // if (keycode == KC_0 || keycode == KC_1 || keycode == KC_2 ||
+    //     keycode == KC_3 || keycode == KC_4 || keycode == KC_5 ||
+    //     keycode == KC_6 || keycode == KC_7 || keycode == KC_8 ||
+    //     keycode == KC_9) {
+    //     return L1_CAT_NUMBER;
+    // }
 
     // Check mod keys first
     if (keycode == KC_TAB || keycode == KC_ESC || keycode == KC_LCTL ||
@@ -319,6 +312,8 @@ layer1_category_t get_layer1_category(uint16_t keycode) {
     // Check brackets
     if (keycode == KC_LPRN || keycode == KC_RPRN ||
         keycode == KC_LBRC || keycode == KC_RBRC ||
+        //add KC_LABK, KC_RABK,
+        keycode == KC_LABK || keycode == KC_RABK ||
         keycode == KC_LCBR || keycode == KC_RCBR) {
         return L1_CAT_BRACKET;
     }
@@ -629,10 +624,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 bool apply_breathing = false;
 
                 switch (cat) {
-                    case L1_CAT_NUMBER:
-                        hsv = (HSV){L1_NUMBERS_H, L1_NUMBERS_S, L1_NUMBERS_V};
-                        apply_breathing = true;  // Numbers breathe
-                        break;
+                    // case L1_CAT_NUMBER:
+                    //     hsv = (HSV){L1_NUMBERS_H, L1_NUMBERS_S, L1_NUMBERS_V};
+                    //     apply_breathing = true;  // Numbers breathe
+                    //     break;
                     case L1_CAT_BRACKET:
                         hsv = (HSV){L1_BRACKETS_H, L1_BRACKETS_S, L1_BRACKETS_V};
                         apply_breathing = true;  // Brackets breathe
@@ -679,7 +674,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
                 switch (cat) {
                     case L2_CAT_NUMBER:
-                        hsv = (HSV){L2_NUMBERS_H, L2_NUMBERS_S, L2_NUMBERS_V};
+                        hsv = (HSV){L1_NUMBERS_H, L1_NUMBERS_S, L1_NUMBERS_V};
+                        apply_breathing = true;
                         break;
                     case L2_CAT_FUNCTION:
                         hsv = (HSV){L2_FUNCTION_H, L2_FUNCTION_S, L2_FUNCTION_V};
