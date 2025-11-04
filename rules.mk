@@ -1,6 +1,6 @@
-VIA_ENABLE          = yes
+VIA_ENABLE          = no
 
-VIAL_ENABLE         = yes
+VIAL_ENABLE         = no
 LTO_ENABLE          = yes
 
 RGBLIGHT_ENABLE     = no
@@ -8,7 +8,7 @@ RGB_MATRIX_ENABLE   = yes # Can't have RGBLIGHT and RGB_MATRIX at the same time.
 RGB_MATRIX_DRIVER = ws2812
 VIALRGB_ENABLE = no
 CONSOLE_ENABLE = no
-MOUSEKEY_ENABLE     = no
+MOUSEKEY_ENABLE     = yes
 OLED_ENABLE         = no
 OLED_DRIVER         = SSD1306
 EXTRAKEY_ENABLE     = no
